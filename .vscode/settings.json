@@ -1,0 +1,9 @@
+{
+  "idf.espIdfPath": "/home/ubuntu24/esp/esp-idf",
+  "idf.toolsPath": "/home/ubuntu24/.espressif",
+  "idf.pythonBinPath": "/home/ubuntu24/.espressif/python_env/idf6.1_py3.12_env/bin/python",
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+  "C_Cpp.intelliSenseEngine": "default",
+  "cmake.configureOnOpen": false,
+  "cmake.copyCompileCommands": false
+}

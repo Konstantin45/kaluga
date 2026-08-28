@@ -1,0 +1,9 @@
+dependencies:
+  idf:
+    version: ">=6.1,<6.2"
+  # The registry package is deprecated but is the official BSP for Kaluga-1.
+  espressif/esp32_s2_kaluga_kit:
+    version: "^5.0.1"
+  # Pin the first camera release series with ESP-IDF 6 fixes.
+  espressif/esp32-camera:
+    version: "2.1.7"

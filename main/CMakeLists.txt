@@ -1,0 +1,20 @@
+idf_component_register(
+    SRCS
+        "main.c"
+        "board_ui.c"
+        "camera_service.c"
+        "input_service.c"
+        "network_service.c"
+        "status_led.c"
+    INCLUDE_DIRS "."
+    REQUIRES
+        esp32_s2_kaluga_kit
+        esp32-camera
+        esp_lvgl_port
+        esp_lcd
+        esp_driver_touch_sens
+        esp_wifi
+        esp_event
+        esp_netif
+        nvs_flash
+)

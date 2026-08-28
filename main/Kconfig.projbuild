@@ -1,0 +1,20 @@
+menu "Kaluga demo configuration"
+
+config KALUGA_WIFI_CONNECT_ENABLED
+    bool "Connect to a configured Wi-Fi network"
+    default n
+    help
+        Enable station connection with credentials stored in sdkconfig.
+        Network scanning is always available.
+
+config KALUGA_WIFI_SSID
+    string "Wi-Fi SSID"
+    depends on KALUGA_WIFI_CONNECT_ENABLED
+    default ""
+
+config KALUGA_WIFI_PASSWORD
+    string "Wi-Fi password"
+    depends on KALUGA_WIFI_CONNECT_ENABLED
+    default ""
+
+endmenu
