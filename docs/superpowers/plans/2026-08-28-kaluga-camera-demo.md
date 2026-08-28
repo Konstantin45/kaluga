@@ -11,7 +11,8 @@
 ## Global Constraints
 
 - Target: Kaluga-1 v1.2, LCD32 v1.1, TouchA v1.1, CAM v1.0, 8311A v1.2.
-- Do not initialise audio or TouchA GPIO 1, 2, 3, 6, or 11.
+- Do not initialise audio or TouchA GPIO 1, 2, 3, 6, or 11. Use only
+  TouchA Record on GPIO5 / Touch pad 5 for capture.
 - Disconnect CAM v1.0 and 8311A v1.2 before flashing; reconnect CAM and power-cycle before testing.
 - Wi-Fi credentials are menuconfig values and must not be committed.
 
@@ -166,10 +167,10 @@ esp_err_t input_service_start(input_capture_callback_t capture_cb);
 - [ ] **Step 2: Implement only non-conflicting TouchA**
 
 ```c
-static const touch_pad_t k_capture_touch = TOUCH_PAD_NUM14;
+static const touch_pad_t k_capture_touch = TOUCH_PAD_NUM5;
 ```
 
-Verify this against the installed BSP’s named macro and use the macro when available. The ISR only notifies a task; that task debounces and invokes `capture_cb`. Never initialise GPIO 1, 2, 3, 6, or 11.
+Verify this against the installed BSP’s named macro and use the macro when available. The ISR only notifies a task; that task debounces and invokes `capture_cb`. Never initialise GPIO 1, 2, 3, 6, or 11. Do not use Touch pad 4 (guard) or 14 (shield) as input buttons.
 
 - [ ] **Step 3: Add an LVGL capture button**
 
@@ -251,7 +252,7 @@ Run: `git add main/network_service.c main/network_service.h main/Kconfig.projbui
 
 - [ ] **Step 1: Document physical setup and hardware limits**
 
-Describe stack order, separate TouchA and CAM FPC connections, camera-first audio exclusion, CAM/8311A pre-flash disconnection, and the five disabled TouchA signals.
+Describe stack order, separate TouchA and CAM FPC connections, camera-first audio exclusion, CAM/8311A pre-flash disconnection, Record as the capture button, and the five disabled TouchA signals.
 
 - [ ] **Step 2: Document build and flash commands**
 

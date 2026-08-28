@@ -16,9 +16,9 @@ TouchA v1.1, CAM v1.0, and 8311A v1.2 audio board.
 - The ESP32-S2 has one I2S peripheral shared by the camera and audio board;
   camera mode does not initialise the audio stack.
 - In the camera + LCD + TouchA combination, TouchA GPIO 1, 2, 3, 6, and 11
-  are multiplexed with the camera or LCD.  The firmware only uses the
-  remaining non-conflicting touch input and describes the limitation in the
-  UI.
+  are multiplexed with the camera or LCD. The firmware uses only the
+  non-conflicting Record button (GPIO5 / Touch pad 5) for capture and
+  describes the limitation in the UI.
 - The camera board is disconnected while flashing because this hardware
   revision can interfere with boot strapping pins.  It is reconnected after
   flashing and power cycling.
