@@ -170,6 +170,13 @@ void board_ui_show_status(const char *status)
     bsp_display_unlock();
 }
 
+static inline uint16_t rgb565_swap_red_blue(uint16_t pixel)
+{
+    return (uint16_t)(((pixel & 0x001fU) << 11) |
+                      (pixel & 0x07e0U) |
+                      ((pixel & 0xf800U) >> 11));
+}
+
 esp_err_t board_ui_show_camera_frame(const uint8_t *pixels, size_t length,
                                      uint16_t width, uint16_t height)
 {
@@ -188,13 +195,20 @@ esp_err_t board_ui_show_camera_frame(const uint8_t *pixels, size_t length,
     if (s_frame_buffer_size < expected) {
         return ESP_ERR_INVALID_SIZE;
     }
-    memcpy(s_frame_buffer, pixels, expected);
+    uint8_t *corrected = s_frame_buffer;
+    for (size_t offset = 0; offset < expected; offset += 2) {
+        const uint16_t pixel = ((uint16_t)pixels[offset] << 8) | pixels[offset + 1];
+        const uint16_t corrected_pixel = rgb565_swap_red_blue(pixel);
+        corrected[offset] = (uint8_t)(corrected_pixel >> 8);
+        corrected[offset + 1] = (uint8_t)corrected_pixel;
+    }
 
     if (!bsp_display_lock(0)) {
         return ESP_ERR_TIMEOUT;
     }
     s_frame_dsc.header.magic = LV_IMAGE_HEADER_MAGIC;
-    s_frame_dsc.header.cf = LV_COLOR_FORMAT_RGB565;
+    /* OV2640 delivers RGB565 with the two bytes of each pixel in wire order. */
+    s_frame_dsc.header.cf = LV_COLOR_FORMAT_RGB565_SWAPPED;
     s_frame_dsc.header.w = width;
     s_frame_dsc.header.h = height;
     s_frame_dsc.data_size = expected;

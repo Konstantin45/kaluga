@@ -65,7 +65,7 @@ esp_err_t camera_service_start(void)
      * config.sccb_i2c_port (BSP_I2C_NUM / I2C1) set by the BSP macro.
      */
     config.pin_d0 = GPIO_NUM_46;
-    config.pin_d1 = GPIO_NUM_45;
+    config.pin_d1 = GPIO_NUM_34;
     esp_err_t err = ESP_FAIL;
     for (unsigned int attempt = 1; attempt <= 2; ++attempt) {
         err = esp_camera_init(&config);
